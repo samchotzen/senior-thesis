@@ -14,29 +14,60 @@ import datetime
 import json
 from collections import Counter,defaultdict
 
-# load keywords
+# load EV keywords
 hashtags = [
-    '#코로나바이러스',  # korean
-    '#コロナウイルス',  # japanese
-    '#冠状病毒',        # chinese
-    '#covid2019',
-    '#covid-2019',
-    '#covid19',
-    '#covid-19',
-    '#coronavirus',
-    '#corona',
-    '#virus',
-    '#flu',
-    '#sick',
-    '#cough',
-    '#sneeze',
-    '#hospital',
-    '#nurse',
-    '#doctor',
+# General
+    '#evs',
+    '#electricvehicles',
+    '#evcharging',
+    '#evadoption',
+    '#evrevolution',
+    '#greentransportation',
+    '#cleantransportation',
+    '#electricvehiclecharging',
+    '#electricvehicleadoption',
+    '#sustainabletransport',
+    '#sustainabletransportation',
+# Companies
+    '#tesla',
+    '#lucidmotors',
+    '#byd',
+    '#canoo',
+    '#electriccarstartup',
+    '#rivian',
+    '#nissanleaf',
+    '#chevybolt',
+    '#fordmustangmache',
+    '#bmwi3',
+    '#kianiroev',
+    '#vwid4',
+    '#audietron',
+    '#hyundaikonaev',
+    '#electricvehicleindustry',
+# Technologies
+    '#electricvehicletechnology',
+    '#evtechnology',
+    '#evtech',
+    '#electricvehicletech',
+    '#batterytechnology',
+    '#chargingtechnology',
+    '#selfdrivingcars',
+    '#regenerativebraking',
+    '#vehicletogrid',
+    '#batterytech',
+    '#chargingtech',
+    '#autonomousvehicles',
+# Policies
+    '#evpolicy',
+    '#evtaxcredits',
+    '#evincentives',
+    '#transportationpolicy',
+    '#evtaxexemptions',
+    '#evtaxdeductions',
     ]
 
 # initialize counters
-counter_lang = defaultdict(lambda: Counter())
+#counter_lang = defaultdict(lambda: Counter())
 counter_country = defaultdict(lambda: Counter())
 
 # open the zipfile
@@ -62,11 +93,11 @@ with zipfile.ZipFile(args.input_path) as archive:
                     continue;
 
                 # search hashtags
-                for hashtag in hashtags:
-                    lang = tweet['lang']
-                    if hashtag in text:
-                        counter_lang[hashtag][lang] += 1
-                    counter_lang['_all'][lang] += 1
+                #for hashtag in hashtags:
+                #    lang = tweet['lang']
+                #    if hashtag in text:
+                #        counter_lang[hashtag][lang] += 1
+                #    counter_lang['_all'][lang] += 1
                 for hashtag in hashtags:
                     try:
                         country = tweet['place']['country_code']
@@ -83,12 +114,12 @@ except FileExistsError:
     pass
 output_path_base = os.path.join(args.output_folder,os.path.basename(args.input_path))
 
-output_path_lang = output_path_base+'.lang'
-print('saving',output_path_lang)
-with open(output_path_lang,'w') as f:
-    f.write(json.dumps(counter_lang))
+#output_path_lang = output_path_base+'.lang'
+#print('saving',output_path_lang)
+#with open(output_path_lang,'w') as f:
+#    f.write(json.dumps(counter_lang))
 
 output_path_country = output_path_base+'.country'
 print('saving',output_path_country)
-with open(output_path_country,'w') as g:
-    g.write(json.dumps(counter_country))
+with open(output_path_country,'w') as f:
+    f.write(json.dumps(counter_country))
