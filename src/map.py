@@ -93,11 +93,6 @@ with zipfile.ZipFile(args.input_path) as archive:
                     continue;
 
                 # search hashtags
-                #for hashtag in hashtags:
-                #    lang = tweet['lang']
-                #    if hashtag in text:
-                #        counter_lang[hashtag][lang] += 1
-                #    counter_lang['_all'][lang] += 1
                 for hashtag in hashtags:
                     try:
                         country = tweet['place']['country_code']
@@ -113,11 +108,6 @@ try:
 except FileExistsError:
     pass
 output_path_base = os.path.join(args.output_folder,os.path.basename(args.input_path))
-
-#output_path_lang = output_path_base+'.lang'
-#print('saving',output_path_lang)
-#with open(output_path_lang,'w') as f:
-#    f.write(json.dumps(counter_lang))
 
 output_path_country = output_path_base+'.country'
 print('saving',output_path_country)
