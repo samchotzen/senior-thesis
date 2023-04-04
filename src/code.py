@@ -13,7 +13,7 @@ import json
 from collections import Counter,defaultdict
 import matplotlib
 import matplotlib.pyplot as plt
-import sys
+import numpy as np
 
 geoTwitterDataByDate = {}
 for date in args.input_paths:
@@ -22,30 +22,44 @@ for date in args.input_paths:
         geoTwitterDataByDate[date] = value
 
 # Store tag argument in local parameter for clarity
-tag = sys.argv
+tag = args.key
 
 # Initialize dictionary to store tag count for each country by date
 model = {}
 dateKeys = geoTwitterDataByDate.keys()
 
-for geoTwitterData in geoTwitterDataByDate:
+i = 0
+
+for geoTwitterDataKey in geoTwitterDataByDate:
     # Get date
-    date = geoTwitterData.split('geoTwitter')[1].split('.zip.country')[0]
-    print("date is: ", date)
+    date = geoTwitterDataKey.split('geoTwitter')[1].split('.zip.country')[0]
+    model[date] = {}
 
     # TODO: Check date is valid datetime with regex (optional)
     
     # Filter data by tag
-    dataForTag = geoTwitterData[tag]
-    print("data for tag is: ", dataForTag)
+    geoTwitterData = geoTwitterDataByDate.get(geoTwitterDataKey)
+    if tag in geoTwitterData:
+        dataForTag = geoTwitterData[tag]
+    else:
+        continue
 
     # Parse data for tag count by country and add to model
     for countryCode in dataForTag:
-        countryTagCount = [countryCode, dataForTag[countryCode]]
-        model[date] = countryTagCount
-    
-    return
+        countryAndTagCount = {countryCode : dataForTag[countryCode]}
+        model[date].update(countryAndTagCount)
+
+    i += 1
+    if i > 10:
+        break
 
 print("model is: ", model)
 
 # Plot with matplotlib
+datelist = [model.keys()]
+x = np.array(datelist)
+for date2 in model:
+    for country in date2:
+        y = np.array(model[date2][country])
+        plt.plot(x, y)
+plt.show()
