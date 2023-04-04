@@ -27,23 +27,23 @@ import matplotlib.pyplot as plt
 #        value[hashtag] = total
 #    allpaths[path] = value
 
-allpaths = {}
+geoTwitterData = {}
 for path in args.input_paths:
     with open(path) as dictionary:
         value = json.load(dictionary)
-        allpaths[path] = value
-#print(allpaths)
+        geoTwitterData[path] = value
+#print(geoTwitterData)
 
 # write the output path for allpaths
 with open(args.output_path,'w') as f:
     f.write(json.dumps(allpaths))
 
-# transform allpaths dictionary into a pandas dataframe
-#df = pd.DataFrame.from_dict(allpaths)
+# transform geoTwitterData dictionary into a pandas dataframe
+#df = pd.DataFrame.from_dict(geoTwitterData)
 #print(df)
 
 # create xaxis list
-#xlist = list(allpaths.keys())
+xlist = list(allpaths.keys())
 #print(xlist)
 
 # create yaxis list
