@@ -56,10 +56,25 @@ for geoTwitterDataKey in geoTwitterDataByDate:
 print("model is: ", model)
 
 # Plot with matplotlib
-datelist = [model.keys()]
-x = np.array(datelist)
-for date2 in model:
-    for country in date2:
-        y = np.array(model[date2][country])
-        plt.plot(x, y)
-plt.show()
+dateList = list(model.keys())
+x = np.array(dateList)
+
+print("x is: ", x)
+
+countryCodeList = []
+
+for date in model:
+    dateData = model[date]
+    for countryCode in dateData:
+        if countryCode in dateData:
+            countryCodeValue = dateData[countryCode]
+            countryCodeList.append(countryCodeValue)
+        else:
+            countryCodeValue = 0
+            countryCodeList.append(countryCodeValue)
+
+#        y = np.array(model[date2][country])
+#        plt.plot(x, y)
+#plt.show()
+print("countryCodeList is: ", countryCodeList)
+# countryCodeTagVector = {}
