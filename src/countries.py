@@ -92,7 +92,7 @@ for countryCode in countryCodeList:
 
 # add chart elements based on input key
 plt.xlabel("Date")
-plt.ylabel("Usage level of " + args.key + "per day")
+plt.ylabel("Usage level of " + args.key + " per day")
 plt.title("Tweets with " + args.key + " in each country from 2018-2022")
 
 # save bar graph file to plots folder
