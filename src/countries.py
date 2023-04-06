@@ -22,38 +22,36 @@ for date in args.input_paths:
         value = json.load(dictionary)
         geoTwitterDataByDate[date] = value
 
-# Store tag argument in local parameter for clarity
+# store tag argument in local parameter for clarity
 tag = args.key
 
-# Initialize dictionary to store tag count for each country by date
+# initialize dictionary to store tag count for each country by date
 model = {}
 dateKeys = geoTwitterDataByDate.keys()
 
 i = 0
 
 for geoTwitterDataKey in geoTwitterDataByDate:
-    # Get date
+    # get date
     if 'geoTwitter' in geoTwitterDataKey:
         date = geoTwitterDataKey.split('geoTwitter')[1].split('.zip.country')[0]
-        print("date is: ", date)
     elif 'tweets-' in geoTwitterDataKey:
         date = geoTwitterDataKey.split('tweets-')[1].split('.zip.country')[0]
         date = datetime.datetime.strptime(date,'%Y%m%d').date().isoformat()[2:]
-        print("date is: ", date)
     else:
         continue
     model[date] = {}
 
-    # TODO: Check date is valid datetime with regex (optional)
+    # TODO: check date is valid datetime with regex (optional)
     
-    # Filter data by tag
+    # filter data by tag
     geoTwitterData = geoTwitterDataByDate.get(geoTwitterDataKey)
     if tag in geoTwitterData:
         dataForTag = geoTwitterData[tag]
     else:
         continue
 
-    # Parse data for tag count by country and add to model
+    # parse data for tag count by country and add to model
     for countryCode in dataForTag:
         countryAndTagCount = {countryCode : dataForTag[countryCode]}
         model[date].update(countryAndTagCount)
@@ -62,14 +60,16 @@ for geoTwitterDataKey in geoTwitterDataByDate:
     if i > 10:
         break
 
-print("model is: ", model)
+#print("model is: ", model)
 
-# Plot with matplotlib
+# plot with matplotlib
 dateList = list(model.keys())
 x = np.array(dateList)
 
+print("dateList is: ", dateList)
 print("x is: ", x)
 
+# create list of all country codes that use the tag
 countryCodeList = []
 for date in model:
     dateData = model[date]
@@ -79,19 +79,21 @@ for date in model:
         else:
             continue
 
-print("countryCodeList is: ", countryCodeList)
-
-for date in model:
-    dateData = model[date]
-    for countryCode in dateData:
+for countryCode in countryCodeList:
+    countryTagCountList = []
+    for date in model:
+        dateData = model[date]
         if countryCode in dateData:
-            countryCodeValue = dateData[countryCode]
-            countryCodeList.append(countryCodeValue)
+            countryTagCountList.append(dateData[countryCode])
         else:
-            countryCodeValue = 0
-            countryCodeList.append(countryCodeValue)
+            countryTagCountList.append(0)
+    y = np.array(countryTagCountList)
+    plt.plot(x, y)
 
-#        y = np.array(model[date2][country])
-#        plt.plot(x, y)
-# plt.show()
-# countryCodeTagVector = {}
+# add chart elements based on input key
+plt.xlabel("Date")
+plt.ylabel("Usage level of " + args.key + "per day")
+plt.title("Tweets with " + args.key + " in each country from 2018-2022")
+
+# save bar graph file to plots folder
+plt.savefig(args.key + '.png')
