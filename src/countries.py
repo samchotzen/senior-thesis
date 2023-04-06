@@ -14,6 +14,7 @@ from collections import Counter,defaultdict
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+import datetime
 
 geoTwitterDataByDate = {}
 for date in args.input_paths:
@@ -27,13 +28,20 @@ tag = args.key
 # Initialize dictionary to store tag count for each country by date
 model = {}
 dateKeys = geoTwitterDataByDate.keys()
-print("dateKeys is: ", dateKeys)
 
 i = 0
 
 for geoTwitterDataKey in geoTwitterDataByDate:
     # Get date
-    date = geoTwitterDataKey.split('geoTwitter')[1].split('.zip.country')[0]
+    if 'geoTwitter' in geoTwitterDataKey:
+        date = geoTwitterDataKey.split('geoTwitter')[1].split('.zip.country')[0]
+        print("date is: ", date)
+    elif 'tweets-' in geoTwitterDataKey:
+        date = geoTwitterDataKey.split('tweets-')[1].split('.zip.country')[0]
+        date = datetime.datetime.strptime(date,'%Y%m%d').date().isoformat()[2:]
+        print("date is: ", date)
+    else:
+        continue
     model[date] = {}
 
     # TODO: Check date is valid datetime with regex (optional)
