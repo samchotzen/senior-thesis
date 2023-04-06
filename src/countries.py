@@ -27,6 +27,7 @@ tag = args.key
 # Initialize dictionary to store tag count for each country by date
 model = {}
 dateKeys = geoTwitterDataByDate.keys()
+print("dateKeys is: ", dateKeys)
 
 i = 0
 
@@ -62,6 +63,15 @@ x = np.array(dateList)
 print("x is: ", x)
 
 countryCodeList = []
+for date in model:
+    dateData = model[date]
+    for countryCode in dateData:
+        if countryCode not in countryCodeList:
+            countryCodeList.append(countryCode)
+        else:
+            continue
+
+print("countryCodeList is: ", countryCodeList)
 
 for date in model:
     dateData = model[date]
@@ -75,6 +85,5 @@ for date in model:
 
 #        y = np.array(model[date2][country])
 #        plt.plot(x, y)
-#plt.show()
-print("countryCodeList is: ", countryCodeList)
+# plt.show()
 # countryCodeTagVector = {}
