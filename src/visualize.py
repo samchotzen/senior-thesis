@@ -25,12 +25,12 @@ if args.percent:
         counts[args.key][k] /= counts['_all'][k]
 
 # print the count values
-items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)
+items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)[:5]
 for k,v in items:
     print(k,':',v)
 
 # create sorted dictionary before plotting
-lists = sorted(sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)[:10], key=lambda kv: kv[1])
+lists = sorted(sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)[:5], key=lambda kv: kv[1])
 key, value = zip(*lists)
 
 # create bar graph
