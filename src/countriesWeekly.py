@@ -59,8 +59,17 @@ for geoTwitterDataKey in geoTwitterDataByDate:
 
 # create array of x coordinates
 dateList = list(model.keys())
-x = np.array(dateList)
+dateListCopy = list(dateList)
+weeklyDateList = []
+dateDayCount = 1
+for date in dateListCopy:
+    if dateDayCount % 7 == 1:
+        weeklyDateList.append(date)
+    dateDayCount += 1
 
+x = np.array(weeklyDateList)
+print("x is: ", x)
+#print("x is: ", x)
 # simplify x-axis from days to years
 #fig, ax = plt.subplots()
 fig = plt.figure(figsize=(20,10))
@@ -78,13 +87,22 @@ countryCodeList = ['US', 'CA', 'GB', 'DE', 'IN'] #'ES', 'AU', 'NL', 'FR', 'JP',]
 
 # create array of y coordinates and plot with matplotlib
 for countryCode in countryCodeList:
+    weekDay = 1
     countryTagCountList = []
+    countryTagCountWeek = 0
     for date in model:
         dateData = model[date]
         if countryCode in dateData:
-            countryTagCountList.append(dateData[countryCode])
+            countryTagCountWeek += dateData[countryCode]
         else:
-            countryTagCountList.append(0)
+            countryTagCountWeek += 0
+        if weekDay == 7:
+            print("date is: ", date)
+            weekDay = 1
+            countryTagCountList.append(countryTagCountWeek)
+            countryTagCountWeek = 0
+        else:
+            weekDay += 1
     y = np.array(countryTagCountList)
     ax.plot(x, y, label=countryCode)
 
@@ -97,4 +115,4 @@ ax.set_ylabel("Usage level of " + args.key + " per day")
 ax.set_title("Tweets with " + args.key + " in each country from 2018-2022")
 
 # save bar graph file to plots folder
-plt.savefig(args.key + '2.png')
+plt.savefig(args.key + 'Weekly.png')
