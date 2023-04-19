@@ -93,7 +93,7 @@ ax.legend()
 ax.set_xticks(['18-01-01', '19-01-01', '20-01-01', '21-01-01', '22-01-01'])
 ax.set_xticklabels(['2018', '2019', '2020', '2021', '2022',])
 ax.set_xlabel("Date")
-ax.set_ylabel("Usage level of " + args.key + " per day")
+ax.set_ylabel("Usage level of " + args.key + " per month")
 ax.set_title("Tweets with " + args.key + " in each country from 2018-2022")
 
 # save bar graph file to plots folder
