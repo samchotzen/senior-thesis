@@ -94,7 +94,6 @@ ax = fig.add_subplot(111)
 
 # create array of y coordinates and plot with matplotlib
 for countryCode in countryCodeList:
-    weekDay = 1
     countryTagCountList = []
     countryTagCountWeek = 0
     for date in model:
@@ -103,12 +102,11 @@ for countryCode in countryCodeList:
             countryTagCountWeek += dateData[countryCode]
         else:
             countryTagCountWeek += 0
-        if weekDay == 7:
-            weekDay = 1
+        if date in x:
             countryTagCountList.append(countryTagCountWeek)
             countryTagCountWeek = 0
         else:
-            weekDay += 1
+            continue
     y = np.array(countryTagCountList)
     ax.plot(x, y, label=countryCode)
 

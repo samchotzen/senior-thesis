@@ -79,12 +79,16 @@ for geoTwitterDataKey in geoTwitterDataByDate:
 # create array of x coordinates
 dateList = list(model.keys())
 dateListCopy = list(dateList)
-weeklyDateList = []
+monthlyDateList = []
 dateDayCount = 1
 for date in dateListCopy:
-    if dateListCopy[date+1] % 7 == 0:
-        weeklyDateList.append(date)
+    if date == '22-12-31':
+        monthlyDateList.append(date)
+    elif dateListCopy[dateDayCount][-2:] == '01':
+        monthlyDateList.append(date)
     dateDayCount += 1
+
+x = np.array(monthlyDateList)
 
 # create figure for plot
 fig = plt.figure(figsize=(20,10))
@@ -93,18 +97,24 @@ ax = fig.add_subplot(111)
 # create array of y coordinates and plot with matplotlib
 for countryCode in countryCodeList:
     countryTagCountList = []
+    countryTagCountMonth = 0
     for date in model:
         dateData = model[date]
         if countryCode in dateData:
-            countryTagCountList.append(dateData[countryCode])
+            countryTagCountMonth += dateData[countryCode]
         else:
-            countryTagCountList.append(0)
+            countryTagCountMonth += 0
+        if date in x:
+            countryTagCountList.append(countryTagCountMonth)
+            countryTagCountMonth = 0
+        else:
+            continue
     y = np.array(countryTagCountList)
     ax.plot(x, y, label=countryCode)
 
 # add chart elements based on input key
 ax.legend()
-ax.set_xticks(['18-01-01', '19-01-01', '20-01-01', '21-01-01', '22-01-01'])
+ax.set_xticks(['18-01-31', '19-01-31', '20-01-31', '21-01-31', '22-01-31'])
 ax.set_xticklabels(['2018', '2019', '2020', '2021', '2022',])
 ax.set_xlabel("Date")
 ax.set_ylabel("Usage level of " + args.key + " per month")
