@@ -63,7 +63,7 @@ dateListCopy = list(dateList)
 weeklyDateList = []
 dateDayCount = 1
 for date in dateListCopy:
-    if dateDayCount % 7 == 1:
+    if dateDayCount % 7 == 0:
         weeklyDateList.append(date)
     dateDayCount += 1
 
