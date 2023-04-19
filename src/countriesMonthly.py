@@ -3,7 +3,9 @@
 # command line args
 import argparse
 parser = argparse.ArgumentParser()
+parser.add_argument('--input_path',required=True)
 parser.add_argument('--input_paths',nargs='+',required=True)
+parser.add_argument('--percent',action='store_true')
 parser.add_argument('--key',required=True)
 args = parser.parse_args()
 
@@ -18,6 +20,23 @@ import datetime
 import matplotlib.dates as mdates
 from matplotlib.dates import YearLocator, DateFormatter
 
+# sort
+# open the input path
+with open(args.input_path) as f:
+    counts = json.load(f)
+
+# normalize the counts by the total values
+if args.percent:
+    for k in counts[args.key]:
+        counts[args.key][k] /= counts['_all'][k]
+
+# create list of top 5 country codes that use the tag
+items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)[:5]
+countryCodeList = []
+for k,v in items:
+    countryCodeList.append(k)
+
+# create model
 # get data from all geoTwitter files into one dictionary
 geoTwitterDataByDate = {}
 for date in args.input_paths:
@@ -59,22 +78,17 @@ for geoTwitterDataKey in geoTwitterDataByDate:
 
 # create array of x coordinates
 dateList = list(model.keys())
-x = np.array(dateList)
+dateListCopy = list(dateList)
+weeklyDateList = []
+dateDayCount = 1
+for date in dateListCopy:
+    if dateListCopy[date+1] % 7 == 0:
+        weeklyDateList.append(date)
+    dateDayCount += 1
 
-# simplify x-axis from days to years
-#fig, ax = plt.subplots()
+# create figure for plot
 fig = plt.figure(figsize=(20,10))
 ax = fig.add_subplot(111)
-
-# create list of all country codes that use the tag
-countryCodeList = ['US', 'CA', 'GB', 'DE', 'IN'] #'ES', 'AU', 'NL', 'FR', 'JP',]
-#for date in model:
-    #dateData = model[date]
-    #for countryCode in dateData:
-        #if countryCode not in countryCodeList:
-            #countryCodeList.append(countryCode)
-        #else:
-            #continue
 
 # create array of y coordinates and plot with matplotlib
 for countryCode in countryCodeList:

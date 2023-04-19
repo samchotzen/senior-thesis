@@ -37,7 +37,7 @@ for k,v in items:
     countryCodeList.append(k)
 print("countryCodeList is: ", countryCodeList)
 
-# plot
+# create model
 # get data from all geoTwitter files into one dictionary
 geoTwitterDataByDate = {}
 for date in args.input_paths:
@@ -82,21 +82,10 @@ dateList = list(model.keys())
 x = np.array(dateList)
 
 # simplify x-axis from days to years
-#fig, ax = plt.subplots()
 fig = plt.figure(figsize=(20,10))
 ax = fig.add_subplot(111)
 
-# create list of all country codes that use the tag
-#countryCodeList = ['US', 'CA', 'GB', 'DE', 'IN'] #'ES', 'AU', 'NL', 'FR', 'JP',]
-#for date in model:
-    #dateData = model[date]
-    #for countryCode in dateData:
-        #if countryCode not in countryCodeList:
-            #countryCodeList.append(countryCode)
-        #else:
-            #continue
-
-# create array of y coordinates and plot with matplotlib
+# create array of y coordinates and plot with matplotlib and plot
 for countryCode in countryCodeList:
     countryTagCountList = []
     for date in model:
