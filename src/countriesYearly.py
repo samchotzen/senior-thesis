@@ -91,7 +91,7 @@ for date in dateListCopy:
 x = np.array(yearlyDateList)
 
 # create figure for plot
-fig = plt.figure(figsize=(20,10))
+fig = plt.figure()
 ax = fig.add_subplot(111)
 
 # create array of y coordinates and plot with matplotlib
@@ -116,7 +116,7 @@ for countryCode in countryCodeList:
 ax.legend()
 ax.set_xticks(['18-12-31', '19-12-31', '20-12-31', '21-12-31', '22-12-31'])
 ax.set_xticklabels(['2018', '2019', '2020', '2021', '2022',])
-ax.set_xlabel("Date")
+ax.set_xlabel("Year")
 ax.set_ylabel("Usage level of " + args.key + " per year")
 ax.set_title("Tweets with " + args.key + " in each country from 2018-2022")
 
