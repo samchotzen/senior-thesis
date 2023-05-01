@@ -88,6 +88,8 @@ This study found that the global conversations around electric vehicles and elec
 
 Figure 3.1: #zeroemissionsYearly
 
+![#zeroemissionsYearly](https://github.com/samchotzen/senior-thesis/blob/main/plots/lineplots/yearly/%23zeroemissionsYearly.png)
+
 The #zeroemissionsYearly plot represented the only hashtag in the results that relates to electric vehicles as well as emissions more broadly. It illustrates that the United States was talking about zero emissions the most in 2018, but saw a steep decline in tweets containing the hashtag in 2020. This presents a slightly downward trend in the conversation about zero emissions on Twitter. In 2020, the COVID-19 pandemic disrupted the global economy and distracted the world from other issues like climate change. However, every country faced similar circumstances during 2020, and not all of the countries saw a downward trend. Spain was affected by COVID-19 and still experienced an increase in the zero emissions conversation in 2020.
 
 Figure 3.2: #electriccarYearly
