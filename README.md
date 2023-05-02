@@ -15,6 +15,7 @@ The dataset used in this study has a few limitations. The first limitation is th
 This study used MapReduce to extract the desired information from the Twitter dataset. MapReduce is an efficient procedure for large scale parallel processing used for a wide range of applications. The procedure consists of three main phases: the Partition phase, the Map phase, and the Reduce phase. The partition phase was not required for this study because the Twitter dataset was already divided into one file per day.
 The src/map.py file accomplished the map phase. To achieve desirable insights, two pieces of information were needed from each tweet in the dataset. One of these pieces was the hashtags that were used in the tweet, and the other piece was the country code associated with the tweet. The src/map.py file contains a list called “hashtag” that has 54 hashtags. There are a few reasons why these hashtags were chosen. Some of them were chosen because they are commonly used hashtags in social media posts related to electric vehicles, others were chosen to provide insight into a specific area of electric vehicle adoption, and some were chosen for data exploration purposes and because they had the potential to provide interesting results. The hashtags were divided into four categories: Electric Vehicle Adoption Generally, Electric Vehicle Companies, Electric Vehicle Technologies, and Electric Vehicle Policies. Of all of the 54 hashtags, 14 were related to electric vehicles generally, 22 were related to electric vehicle companies, 12 were related to electric vehicle technologies, and 6 were related to electric vehicle policies.
 
+```
 hashtags = [
 #General
    '#evs',
@@ -75,6 +76,7 @@ hashtags = [
    '#evtaxexemptions',
    '#evtaxdeductions',
    ]
+```
 
 The src/map.py file opened every zip file and searched the contents of every tweet from that day. It extracted the country code from each tweet, but only extracted hashtags that matched one of the hashtags in the “hashtag” list. For every file, src/map.py summed the number of tweets that contained each hashtag for each country code. The resulting data was organized in a dictionary in a new file, which was added to the resulting outputs/ folder.
 
